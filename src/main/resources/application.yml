@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 21000
 spring:
   jpa:
     database: h2
@@ -12,6 +12,8 @@ spring:
       enabled: true
       max-file-size: 20MB
       max-request-size: 20MB
+  application:
+    name: message-service
 
 eureka:
   instance:
