@@ -26,8 +26,10 @@ public class MessageController {
     private static final String API_STR = "/api";
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
-    private static final String CONFERENCE_IP="http://127.0.0.1:21000/";
-    private static final String USER_IP="http://47.100.106.153:21001/api/user/";
+    private static final String CONFERENCE_IP="http://conference-service/api/conference/";
+    private static final String USER_IP="http://user-service/api/user/";
+//    private static final String CONFERENCE_IP="http://127.0.0.1:21000/";
+//    private static final String USER_IP="http://47.100.106.153:21001/api/user/";
 
     @Autowired
     public MessageController(MessageService messageService) {
