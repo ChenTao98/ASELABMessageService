@@ -3,6 +3,7 @@ package com.chentao.aselab.message.service;
 import com.chentao.aselab.message.controller.RequestTem.ResponseConference;
 import com.chentao.aselab.message.controller.RequestTem.ResponseUser;
 import com.chentao.aselab.message.controller.request.MessageRequestBody;
+import com.chentao.aselab.message.controller.request.SentMessage;
 import com.chentao.aselab.message.entity.Message;
 import com.chentao.aselab.message.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,16 @@ public class MessageService {
         message.setStatus(0);
         message.setContent(user.getUsername()+","+conference.getFullName()+","+conference.getId());
         message.setUserId(idOfUserToBeSent);
+        message.setSentTime(new Timestamp(System.currentTimeMillis()));
+        messageRepository.save(message);
+        return 0;
+    }
+    public int sendMessage(SentMessage sentMessage){
+        Message message=new Message();
+        message.setType(sentMessage.getType());
+        message.setStatus(0);
+        message.setContent(sentMessage.getMessage());
+        message.setUserId(sentMessage.getUserToSent());
         message.setSentTime(new Timestamp(System.currentTimeMillis()));
         messageRepository.save(message);
         return 0;

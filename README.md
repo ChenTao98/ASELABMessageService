@@ -1,5 +1,6 @@
 # Message 微服务
 ## 部署
-1. git pull
-2. mvn clean package -DskipTests
-3. 打开target目录运行jar包 nohup java -jar -.jar --spring.profiles.active=product & 其中./nohup.out是输出文件
+在工作目录下，运行使用如下命令脚本文件即可，
+```shell script
+sh run.sh
+```

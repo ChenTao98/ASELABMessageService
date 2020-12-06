@@ -3,6 +3,7 @@ package com.chentao.aselab.message.controller;
 import com.chentao.aselab.message.controller.RequestTem.ResponseConference;
 import com.chentao.aselab.message.controller.RequestTem.ResponseUser;
 import com.chentao.aselab.message.controller.request.MessageRequestBody;
+import com.chentao.aselab.message.controller.request.SentMessage;
 import com.chentao.aselab.message.controller.request.SentMessageRequestBody;
 import com.chentao.aselab.message.controller.response.ResponseObject;
 import com.chentao.aselab.message.entity.Message;
@@ -98,6 +99,25 @@ public class MessageController {
         String messageStr=errorCode==0?SUCCESS:FAIL;
         return ResponseEntity.ok(new ResponseObject(errorCode,messageStr,null));
     }
+
+    @PostMapping(API_STR+"/message/SendMessage")
+    public ResponseEntity<Object> sentMessage(@RequestBody SentMessage sentMessage){
+        RestTemplate restTemplate = new RestTemplate();
+        String baseUrl = USER_IP+"/profile";
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("userId",sentMessage.getUserToSent().toString());
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl);
+        URI uri = builder.queryParams(params).build().encode().toUri();
+        ResponseObject responseObject=restTemplate.getForObject(uri,ResponseObject.class);
+        if(responseObject.getErrorCode()!=0){
+            return ResponseEntity.ok(new ResponseObject(1,responseObject.getMessage(),null));
+        }
+        ResponseUser user=JSON.parseObject(JSON.toJSONString(responseObject.getData()),ResponseUser.class);
+        int errorCode=messageService.sendMessage(sentMessage);
+        String messageStr=errorCode==0?SUCCESS:FAIL;
+        return ResponseEntity.ok(new ResponseObject(errorCode,messageStr,null));
+    }
+
 //    @PostMapping("/NewMessage")
 //    public ResponseEntity<Message> addNewMessage(@RequestBody MessageRequestBody messageRequestBody) {
 //        if (messageRequestBody.getUserId() == null) {
