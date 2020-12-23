@@ -1,5 +1,5 @@
 server:
-  port: 21000
+  port: 8085
 spring:
   jpa:
     database: h2
@@ -16,9 +16,10 @@ spring:
     name: message-service
 eureka:
   instance:
-    hostname: 47.100.106.153
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
   client:
     service-url:
-      defaultZone: http://fduse:Fudanse2019@106.14.16.245:8911/eureka/
+      defaultZone: http://fduse:Fudanse2019@eureka-service:8911/eureka/
     register-with-eureka: true
     fetch-registry: true
